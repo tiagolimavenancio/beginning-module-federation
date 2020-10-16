@@ -2,7 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import "./index.css";
-import Widget1 from "widgets/Widget1";
+// import Widget1 from "widgets/Widget1";
+const Widget1 = React.lazy(() => import("widgets/Widget1"));
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -29,8 +30,10 @@ class ErrorBoundary extends React.Component {
 
 const App = () => (
   <div>
-    <ErrorBoundary>
-      <Widget1 />
+    <ErrorBoundary fallback={<div>It´s Wrong</div>}>
+      <React.Suspense fallback={<div>Couldn´t load it</div>}>
+        <Widget1 />
+      </React.Suspense>
     </ErrorBoundary>
     <div>Hi there, I'm React from React.</div>
   </div>
